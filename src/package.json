@@ -1,0 +1,19 @@
+{
+    "name": "rule_validation_api",
+    "version": "1.0.0",
+    "description": "Rule Validation API",
+    "main": "server.js",
+    "engines": {
+        "node": "10.13.0",
+        "npm": "6.14.10"
+    },
+    "scripts": {
+        "start": "node server.js",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "Kufre Okon",
+    "license": "ISC",
+    "dependencies": {
+        "express": "^4.17.1"
+    }
+}
