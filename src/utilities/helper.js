@@ -16,8 +16,10 @@ const helper = {
         return typeof obj === 'object' && obj !== null
     },
     empty: function(str) {
+        if (typeof str == 'undefined')
+            return true;
         str = "" + str;
-        if (typeof str == 'undefined' || !str || str.length === 0 || str === "" || !/[^\s]/.test(str) || /^\s*$/.test(str) || str.replace(/\s/g, "") === "")
+        if (!str || str.length === 0 || str === "" || !/[^\s]/.test(str) || /^\s*$/.test(str) || str.replace(/\s/g, "") === "")
             return true;
         else
             return false;
