@@ -40,7 +40,7 @@ app.get('*', controller.home)
 // error handler
 app.use((err, req, res, next) => {
     if (err instanceof ApplicationError)
-        return new ApiResponse(req, res).sendError(500, err.message);
+        return new ApiResponse(req, res).sendError(400, err.message);
     console.log(err);
     return new ApiResponse(req, res).sendError(500, `An error occurred while processing your request. !!!`);
 })
