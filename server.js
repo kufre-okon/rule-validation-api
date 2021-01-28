@@ -45,6 +45,11 @@ app.use((err, req, res, next) => {
     return new ApiResponse(req, res).sendError(500, `An error occurred while processing your request. !!!`);
 })
 
+// Capture all 404 errors
+app.use((req, res, next) => {
+    new ApiResponse(req, res).sendError(404, 'Unable to find the requested resource!');
+});
+
 app.listen(port, () => {
     console.info(`Server started on Port:${port}". \nTo terminate use Ctrl + c`);
 });
