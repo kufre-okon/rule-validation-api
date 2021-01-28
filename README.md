@@ -1,2 +1,2 @@
 # rule-validation-api
-Rule Validation API
+Simple Rule Validation API based on Express
