@@ -20,8 +20,10 @@ module.exports = {
             return api.sendError(400, "rule is required.");
         if (data === undefined)
             return api.sendError(400, "data is required.");
-
-        if (!helper.isObject(rule))
+        // since we have a top-level middleware to check against invalid JSON,
+        // here we just need to check that it is of correct 
+        // type (Note: int,string,array are all valid Json)
+        if (!helper.isObject(rule) || Array.isArray(rule))
             return api.sendError(400, "rule should be an object.");
 
         const { field, condition, condition_value } = {...rule };
@@ -36,9 +38,9 @@ module.exports = {
         // get rule.field nested objects
         let fieldLevels = field.split('.');
         if (data[fieldLevels[0]] === undefined)
-            return api.sendError(400, `field ${fieldLevels[0]} is missing from data.`);
+            return api.sendError(400, `field ${field} is missing from data.`);
         if (fieldLevels.length > 1 && data[fieldLevels[0]][fieldLevels[1]] === undefined)
-            return api.sendError(400, `field ${fieldLevels[1]} is missing from data.`);
+            return api.sendError(400, `field ${field} is missing from data.`);
 
         // validation starts
         let validationStatus = false,

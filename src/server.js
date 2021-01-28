@@ -1,7 +1,8 @@
 /*************************************************************************************
- * GENERAL ASSUMPTION *
+ * GENERAL ASSUMPTIONS *
  * 
- * Since it was not explicitly stated, I assumed string validations are case sentitive
+ * Since it was not explicitly stated, I assumed string validations are case sentitive.
+ * Also strict equality is assumed i.e. "0" !== 0
  * 
  */
 
@@ -47,3 +48,6 @@ app.use((err, req, res, next) => {
 app.listen(port, () => {
     console.info(`Server started on Port:${port}". \nTo terminate use Ctrl + c`);
 });
+
+// for testing
+module.exports = app;

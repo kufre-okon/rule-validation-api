@@ -9,11 +9,16 @@
     },
     "scripts": {
         "start": "node server.js",
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "test": "mocha --timeout 10000"
     },
     "author": "Kufre Okon",
     "license": "ISC",
     "dependencies": {
         "express": "^4.17.1"
+    },
+    "devDependencies": {
+        "chai": "^4.2.0",
+        "chai-http": "^4.3.0",
+        "mocha": "^8.2.1"
     }
 }
