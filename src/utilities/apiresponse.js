@@ -31,6 +31,27 @@ class ApiResponse {
         return this.res.status(statusCode).json({ message, status: "error", data: null });
     }
 
+    /**
+     * Send validation response to the caller
+     * @param {boolean} isValidated 
+     * @param {string} fullFieldName 
+     * @param {any} fieldValue 
+     * @param {string} condition 
+     * @param {any} conditionValue 
+     */
+    sendValidationResponse(isValidated, fullFieldName, fieldValue, condition, conditionValue) {
+        let data = {
+            "validation": {
+                "error": !isValidated,
+                "field": fullFieldName,
+                "field_value": fieldValue,
+                "condition": condition,
+                "condition_value": conditionValue
+            }
+        }
+        let msg = `field ${fullFieldName} ${(isValidated?'successfully validated':'failed validation')}.`;
+        return this.sendJson(msg, isValidated, data)
+    }
 
 }
 

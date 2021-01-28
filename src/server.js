@@ -1,6 +1,14 @@
+/*************************************************************************************
+ * GENERAL ASSUMPTION *
+ * 
+ * Since it was not explicitly stated, I assumed string validations are case sentitive
+ * 
+ */
+
 const express = require('express');
 const ApiResponse = require('./utilities/apiresponse.js');
-const { helper } = require("./utilities/helper.js");
+const controller = require("./controllers/home.controller.js");
+const { ApplicationError } = require("./utilities/custome-error.js");
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -23,48 +31,17 @@ app.use(express.urlencoded({
     extended: true
 }));
 
-app.post('/validate-rule', (req, res) => {
-    const { rule, data } = {...req.body };
-    if (rule === undefined)
-        return new ApiResponse(req, res).sendError(400, "rule is required.");
-    if (data === undefined)
-        return new ApiResponse(req, res).sendError(400, "data is required.");
-
-    if (!(Array.isArray(data) || helper.isValidJson(data) || helper.isString(data)))
-        return new ApiResponse(req, res).sendError(400, "data should be an array or json or string.");
-    if (!helper.isObject(rule))
-        return new ApiResponse(req, res).sendError(400, "rule should be an object.");
-
-    const { field, condition, condition_value } = {...rule };
-    // validate rule fields
-    if (field === undefined)
-        return new ApiResponse(req, res).sendError(400, "field is required.");
-    if (condition === undefined)
-        return new ApiResponse(req, res).sendError(400, "condition is required.");
-    if (condition_value === undefined)
-        return new ApiResponse(req, res).sendError(400, "condition_value is required.");
-
-    // get rule.field nesting objects
-
-
-    return res.status(200).json("testing");
-})
+app.post('/validate-rule', controller.validateData)
 
 // catch all
-app.get('*', (req, res) => {
-    new ApiResponse(req, res).sendJson("My Rule-Validation API", true, {
-        "name": "Kufre Effiong Okon",
-        "github": "@kufre-okon",
-        "email": "kufreeffiong34@gmail.com",
-        "mobile": "07065657658",
-        "twitter": "@kufreokon24"
-    })
-})
+app.get('*', controller.home)
 
 // error handler
 app.use((err, req, res, next) => {
-    console.log(req);
-    return new ApiResponse(req, res).sendError(500, `Server Error!!!`);
+    if (err instanceof ApplicationError)
+        return new ApiResponse(req, res).sendError(500, err.message);
+    console.log(err);
+    return new ApiResponse(req, res).sendError(500, `An error occurred while processing your request. !!!`);
 })
 
 app.listen(port, () => {
