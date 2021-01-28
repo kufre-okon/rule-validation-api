@@ -19,7 +19,8 @@ class ApiResponse {
      * @param {any} data 
      */
     sendJson(message, status, data) {
-        return this.res.status(200).json({ message, status: status ? "success" : "error", data });
+        let statusCode = status ? 200 : 400;
+        return this.res.status(statusCode).json({ message, status: status ? "success" : "error", data });
     }
 
     /**
